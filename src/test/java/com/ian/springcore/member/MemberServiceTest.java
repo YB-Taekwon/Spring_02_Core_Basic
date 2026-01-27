@@ -1,9 +1,5 @@
-package com.ian.springcore.service;
+package com.ian.springcore.member;
 
-import com.ian.springcore.member.Grade;
-import com.ian.springcore.member.Member;
-import com.ian.springcore.member.MemberService;
-import com.ian.springcore.member.MemberServiceImpl;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
