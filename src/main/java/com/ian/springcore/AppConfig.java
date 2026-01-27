@@ -1,6 +1,8 @@
 package com.ian.springcore;
 
+import com.ian.springcore.discount.DiscountPolicy;
 import com.ian.springcore.discount.RateDiscountPolicy;
+import com.ian.springcore.member.MemberRepository;
 import com.ian.springcore.member.MemberService;
 import com.ian.springcore.member.MemberServiceImpl;
 import com.ian.springcore.member.MemoryMemberRepository;
@@ -14,11 +16,19 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AppConfig {
 
+    public MemberRepository memberRepository() {
+        return new MemoryMemberRepository();
+    }
+
     public MemberService memberService() {
-        return new MemberServiceImpl(new MemoryMemberRepository());
+        return new MemberServiceImpl(memberRepository());
+    }
+
+    public DiscountPolicy discountPolicy() {
+        return new RateDiscountPolicy();
     }
 
     public OrderService orderService() {
-        return new OrderServiceImpl(new MemoryMemberRepository(), new RateDiscountPolicy());
+        return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 }
