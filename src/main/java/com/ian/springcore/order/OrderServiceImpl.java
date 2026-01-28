@@ -3,7 +3,6 @@ package com.ian.springcore.order;
 import com.ian.springcore.discount.DiscountPolicy;
 import com.ian.springcore.member.Member;
 import com.ian.springcore.member.MemberRepository;
-import com.ian.springcore.member.MemberService;
 
 public class OrderServiceImpl implements OrderService {
 
@@ -29,5 +28,10 @@ public class OrderServiceImpl implements OrderService {
         int discountPrice = discountPolicy.discount(member, productPrice);
 
         return new Order(member.getId(), productName, productPrice, discountPrice);
+    }
+
+    // 테스트 용도
+    public MemberRepository getMemberRepository() {
+        return memberRepository;
     }
 }

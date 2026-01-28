@@ -17,13 +17,19 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AppConfig {
 
+    /**
+     * memberRepository, memberService, orderService로 인해 memberRepository가 총 3번 호출되어야 하는데
+     * 스프링 컨테이너가 싱글톤을 보장하여 애플리케이션 실행 시 오직 1번만 호출되는 것을 확인할 수 있음
+     */
     @Bean
     public MemberRepository memberRepository() {
+        System.out.println("call AppConfig.memberRepository");
         return new MemoryMemberRepository();
     }
 
     @Bean
     public MemberService memberService() {
+        System.out.println("call AppConfig.memberService");
         return new MemberServiceImpl(memberRepository());
     }
 
@@ -34,6 +40,7 @@ public class AppConfig {
 
     @Bean
     public OrderService orderService() {
+        System.out.println("call AppConfig.orderService");
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 }
