@@ -2,7 +2,6 @@ package com.ian.springcore.singleton;
 
 import com.ian.springcore.AppConfig;
 import com.ian.springcore.member.MemberService;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,5 +24,21 @@ public class SingletonTest {
 
         // memberService1 != memberService2
         assertThat(memberService1).isNotSameAs(memberService2);
+    }
+
+    @Test
+    @DisplayName("싱글톤 패턴을 적용한 객체 사용")
+    void singletonServiceTest() {
+        // 생성자를 private으로 선언했기 때문에 외부에서 호출 불가능
+//        SingletonService singletonService = new SingletonService();
+
+        SingletonService singletonService1 = SingletonService.getInstance();
+        SingletonService singletonService2 = SingletonService.getInstance();
+
+        System.out.println("singletonService1 = " + singletonService1);
+        System.out.println("singletonService2 = " + singletonService2);
+
+        // isSameAs: == / isEqualTo: equals()
+        assertThat(singletonService1).isSameAs(singletonService2);
     }
 }
