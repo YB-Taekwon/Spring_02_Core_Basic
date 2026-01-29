@@ -1,5 +1,8 @@
 package com.ian.springcore;
 
+import com.ian.springcore.member.MemberRepository;
+import com.ian.springcore.member.MemoryMemberRepository;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
@@ -31,4 +34,21 @@ import org.springframework.context.annotation.FilterType;
         )
 )
 public class AutoAppConfig {
+
+        /**
+         * 상황
+         * MemoryMemberRepository 클래스에 @Repository 애너테이션이 있기 때문에 스프링에서 memoryMemberRepository라는 이름의 빈을 자동으로 등록
+         * AutoAppConfig에 memoryMemberRepository라는 이름의 빈을 수동으로 등록
+         * 동일한 이름의 빈이 중복되면 원래는 예외 발생
+         * 결과
+         * 하나는 Configuration에 수동 등록을 했고, 하나는 스프링에서 자동으로 등록하는 경우 수동으로 작성한 빈의 등록이 우선권을 갖음
+         * 즉 스프링에서는 수동 등록한 빈이 오버라이딩 되어 하나의 빈만 등록되고 예외가 발생하지 않음
+         * 단, 스프링 부트에서는 자동 오버라이딩 false를 기본값으로 지정하여 예외가 발생
+         * -> application.properties에서 spring.main.allow-bean-definition-overriding 설정값을 true로 변경하면 예외 발생 X
+         * @return
+         */
+//        @Bean(name = "memoryMemberRepository")
+//        public MemberRepository memberRepository() {
+//                return new MemoryMemberRepository();
+//        }
 }
