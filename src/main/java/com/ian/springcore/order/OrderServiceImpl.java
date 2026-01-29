@@ -1,13 +1,13 @@
 package com.ian.springcore.order;
 
+import com.ian.springcore.annotation.MainDiscountPolicy;
 import com.ian.springcore.discount.DiscountPolicy;
 import com.ian.springcore.member.Member;
 import com.ian.springcore.member.MemberRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service // @Service 내부에 @Component 애너테이션이 있기 때문에 컴포넌트 스캔으로 스프링 빈으로 자동 등록
-@RequiredArgsConstructor // @RequiredArgsConstructor: final 필드의 생성자 주입 코드를 대신 작성해줌
 public class OrderServiceImpl implements OrderService {
 
 
@@ -30,11 +30,12 @@ public class OrderServiceImpl implements OrderService {
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
 
-//    @Autowired
-//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-//        this.memberRepository = memberRepository;
-//        this.discountPolicy = discountPolicy;
-//    }
+    // 구현체에서 @Qualifier를 사용하기 때문에 주입 대상에 @Qualifier 애너테이션을 붙이지 않으면 예외 발생
+    @Autowired
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String productName, int productPrice) {
