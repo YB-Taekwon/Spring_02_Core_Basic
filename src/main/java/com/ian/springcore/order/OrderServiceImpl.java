@@ -3,10 +3,11 @@ package com.ian.springcore.order;
 import com.ian.springcore.discount.DiscountPolicy;
 import com.ian.springcore.member.Member;
 import com.ian.springcore.member.MemberRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service // @Service 내부에 @Component 애너테이션이 있기 때문에 컴포넌트 스캔으로 스프링 빈으로 자동 등록
+@RequiredArgsConstructor // @RequiredArgsConstructor: final 필드의 생성자 주입 코드를 대신 작성해줌
 public class OrderServiceImpl implements OrderService {
 
 
@@ -29,11 +30,11 @@ public class OrderServiceImpl implements OrderService {
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
 
-    @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-        this.memberRepository = memberRepository;
-        this.discountPolicy = discountPolicy;
-    }
+//    @Autowired
+//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+//        this.memberRepository = memberRepository;
+//        this.discountPolicy = discountPolicy;
+//    }
 
     @Override
     public Order createOrder(Long memberId, String productName, int productPrice) {

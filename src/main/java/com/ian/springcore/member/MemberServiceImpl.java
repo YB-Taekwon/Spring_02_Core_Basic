@@ -1,9 +1,10 @@
 package com.ian.springcore.member;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service // @Service 내부에 @Component 애너테이션이 있기 때문에 컴포넌트 스캔으로 스프링 빈으로 자동 등록
+@RequiredArgsConstructor // @RequiredArgsConstructor: final 필드의 생성자 주입 코드를 대신 작성해줌
 public class MemberServiceImpl implements MemberService {
 
     // config를 통한 생성자 주입 방식으로 변경
@@ -20,10 +21,10 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
 
     // Autowired: 의존 관계를 자동으로 주입, 생성자가 하나일 경우 생략 가능
-    @Autowired // 기본적으로 타입이 동일한 빈을 찾아서 주입 -> ac.getBean(MemberRepository.class);
-    public MemberServiceImpl(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
-    }
+//    @Autowired // 기본적으로 타입이 동일한 빈을 찾아서 주입 -> ac.getBean(MemberRepository.class);
+//    public MemberServiceImpl(MemberRepository memberRepository) {
+//        this.memberRepository = memberRepository;
+//    }
 
     @Override
     public void join(Member member) {
