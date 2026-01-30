@@ -1,13 +1,6 @@
 package com.ian.springcore.lifecycle;
 
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.InitializingBean;
-
 /**
- * InitializingBean: 빈 초기화
- * DisposableBean: 빈 소멸
- * ※ 스프링에 지나치게 의존적인 초기 방식으로 현재는 잘 사용하지 않음
- * <p>
  * BeanLifeCycleTest 결과
  * 생성자 호출: url= null
  * NetworkClient.afterPropertiesSet
@@ -16,7 +9,7 @@ import org.springframework.beans.factory.InitializingBean;
  * NetworkClient.destroy
  * disconnect: url = http://localhost:8080/
  */
-public class NetworkClient implements InitializingBean, DisposableBean {
+public class NetworkClient {
 
     private String url;
 
@@ -44,18 +37,38 @@ public class NetworkClient implements InitializingBean, DisposableBean {
         System.out.println("disconnect: url = " + url);
     }
 
+    /**
+     * 인터페이스
+     * implements InitializingBean, DisposableBean
+     * - InitializingBean: 빈 초기화
+     * - DisposableBean: 빈 소멸
+     * ※ 스프링에 지나치게 의존적인 초기 방식으로 현재는 잘 사용하지 않음
+     */
     // 의존 관계 주입이 끝나면 호출
-    @Override
-    public void afterPropertiesSet() throws Exception {
+//    @Override
+//    public void afterPropertiesSet() throws Exception {
+//        System.out.println("NetworkClient.afterPropertiesSet");
+//
+//        connect();
+//        call("초기화 연결 메시지");
+//    }
+
+    // 빈 소멸 전 호출
+//    @Override
+//    public void destroy() throws Exception {
+//        System.out.println("NetworkClient.destroy");
+//
+//        disconnect();
+//    }
+
+    public void init() {
         System.out.println("NetworkClient.afterPropertiesSet");
 
         connect();
         call("초기화 연결 메시지");
     }
 
-    // 빈 소멸 전 호출
-    @Override
-    public void destroy() throws Exception {
+    public void close() {
         System.out.println("NetworkClient.destroy");
 
         disconnect();

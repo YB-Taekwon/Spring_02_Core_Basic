@@ -1,11 +1,10 @@
 package com.ian.springcore.lifecycle;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 public class BeanLifeCycleTest {
 
@@ -23,6 +22,7 @@ public class BeanLifeCycleTest {
      * - 설정 정보(Config, xml 등)에 초기화 메서드, 종료 메서드 지정
      * - @PostConstruct, @PreDestroy 애너테이션
      */
+    @Configuration
     static class LifecycleConfig {
 
         /**
@@ -35,7 +35,17 @@ public class BeanLifeCycleTest {
          * 6. 소멸 전 콜백 -> 빈이 소멸되기 직전에 호출
          * 7. 스프링 종료
          */
-        @Bean
+
+        /**
+         * 설정 정보에 초기화, 종료 메서드 지정
+         * - 메서드 이름을 자유롭게 줄 수 있음
+         * - 스프링 빈이 스프링 코드에 의존하지 않음
+         * - 코드가 아닌 설정 정보를 사용하기 때문에 코드를 고칠 수 없는 외부 라이브러리에서도 초기화 및 종료 메서드를 적용할 수 있음
+         * <p>
+         * @Bean에서 종료 메서드의 경우, (inferred)값이 기본값으로 등록되어 메서드 명이 close, shutdown일 경우 자동으로 호출 (추론)
+         * -> 스프링 빈으로 등록하면 종료 메서드는 따로 지정하지 않아도 정상 동작
+         */
+        @Bean(initMethod = "init", destroyMethod = "close")
         public NetworkClient networkClient() {
             /**
              * 스프링 빈 라이프 사이클
