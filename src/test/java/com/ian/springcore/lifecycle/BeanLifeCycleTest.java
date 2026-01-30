@@ -45,7 +45,8 @@ public class BeanLifeCycleTest {
          * @Bean에서 종료 메서드의 경우, (inferred)값이 기본값으로 등록되어 메서드 명이 close, shutdown일 경우 자동으로 호출 (추론)
          * -> 스프링 빈으로 등록하면 종료 메서드는 따로 지정하지 않아도 정상 동작
          */
-        @Bean(initMethod = "init", destroyMethod = "close")
+//        @Bean(initMethod = "init", destroyMethod = "close")
+        @Bean
         public NetworkClient networkClient() {
             /**
              * 스프링 빈 라이프 사이클

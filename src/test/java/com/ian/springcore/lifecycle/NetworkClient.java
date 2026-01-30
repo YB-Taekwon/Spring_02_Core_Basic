@@ -1,5 +1,8 @@
 package com.ian.springcore.lifecycle;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+
 /**
  * BeanLifeCycleTest 결과
  * 생성자 호출: url= null
@@ -61,6 +64,14 @@ public class NetworkClient {
 //        disconnect();
 //    }
 
+    /**
+     * @PostConstruct, @PreDestroy 애너테이션 사용
+     * - 최신 스프링에서 가장 권장하는 방식
+     * - 자바 표준으로 스프링에 종속적이지 않아 다른 프로그램에서도 잘 동작함
+     * - 컴포넌트 스캔과 가장 좋은 조합
+     * ※ 단, 외부 라이브러리에는 적용을 못 하기 때문에 이같은 경우에는 설정 정보에 빈 등록 메서드와 종료 메서드를 지정하는 방식을 사용
+     */
+    @PostConstruct
     public void init() {
         System.out.println("NetworkClient.afterPropertiesSet");
 
@@ -68,6 +79,7 @@ public class NetworkClient {
         call("초기화 연결 메시지");
     }
 
+    @PreDestroy
     public void close() {
         System.out.println("NetworkClient.destroy");
 
